@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  dcm4chee:
+    image: dcm4che/dcm4chee-arc-psql:5.33.1
+    container_name: dcm4chee
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      POSTGRES_DB: pacsdb
+      POSTGRES_USER: pacs
+      POSTGRES_PASSWORD: pacs
+      ARCHIVE_DEVICE_NAME: dcm4chee-arc
+      WILDFLY_ADMIN_USER: admin
+      WILDFLY_ADMIN_PASSWORD: admin
+      JAVA_OPTS: "-Djava.security.manager=allow -Djava.security.policy=/opt/wildfly/standalone/configuration/security.policy"
+    ports:
+      - "8080:8080"  # Web UI
+      - "8443:8443"  # Web UI (HTTPS)
+      - "11112:11112"  # DICOM
+      - "2762:2762"  # DICOM TLS
+    volumes:
+      - type: bind
+        source: ./data/wildfly
+        target: /opt/wildfly/standalone/data
+      - type: bind
+        source: ./data/archive
+        target: /var/local/archive
+    networks:
+      - dcm4chee-network
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/dcm4chee-arc/ui2/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  postgres:
+    image: postgres:13
+    container_name: dcm4chee-postgres
+    environment:
+      POSTGRES_DB: pacsdb
+      POSTGRES_USER: pacs
+      POSTGRES_PASSWORD: pacs
+    volumes:
+      - type: bind
+        source: ./data/postgres
+        target: /var/lib/postgresql/data
+    networks:
+      - dcm4chee-network
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pacs -d pacsdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  dcm4chee-network:
+    driver: bridge
+
+volumes:
+  archive:
+  storage:
+  postgres-data:

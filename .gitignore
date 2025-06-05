@@ -1,0 +1,19 @@
+# データディレクトリ
+data/
+
+# Windows固有のファイル
+desktop.ini
+Thumbs.db
+
+# ログファイル
+*.log
+
+# 一時ファイル
+*.tmp
+*.temp
+
+# IDE固有のファイル
+.vscode/
+.idea/
+*.swp
+*.swo 

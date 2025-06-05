@@ -1,0 +1,8 @@
+This project includes dcm4chee-arc-psql, which is licensed under the Apache License 2.0.
+
+dcm4chee-arc-psql
+Copyright 2024 dcm4che.org
+https://github.com/dcm4che/dcm4chee-arc-light
+
+This project is a derivative work of dcm4chee-arc-psql, modified for Docker deployment.
+Copyright 2025 Mochimaki 
