@@ -89,8 +89,8 @@
 
 1. リポジトリをクローン
 ```bash
-git clone <repository-url>
-cd dcm4chee
+git clone https://github.com/mochimaki/dcm4chee-arc-psql-docker.git
+cd dcm4chee-arc-psql-docker
 ```
 
 2. 必要なディレクトリを作成
