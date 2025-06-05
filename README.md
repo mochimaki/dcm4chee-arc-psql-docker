@@ -1,6 +1,19 @@
-# dcm4chee-arc-psql セットアップ
+# dcm4chee-arc-psql Docker環境構築
 
-このリポジトリは、dcm4chee-arc-psql（DICOM PACSシステム）のDocker環境を提供します。
+このリポジトリは、[dcm4chee-arc-light](https://github.com/dcm4che/dcm4chee-arc-light)と[dcm4chee-arc-psql](https://hub.docker.com/r/dcm4che/dcm4chee-arc-psql)のDockerイメージを使用して、DICOM PACSシステムを簡単に構築するための`docker-compose.yml`設定を提供します。
+
+## 概要
+
+本プロジェクトは以下のコンポーネントを組み合わせて、DICOM PACSシステムを構築します：
+
+1. **[dcm4chee-arc-psql](https://hub.docker.com/r/dcm4che/dcm4chee-arc-psql)**
+   - DICOM PACSシステムのメインコンポーネント
+   - Wildflyアプリケーションサーバー上で動作
+   - Web UIとDICOMサービスを提供
+
+2. **[PostgreSQL](https://hub.docker.com/_/postgres)**
+   - データベースサーバー
+   - dcm4cheeのメタデータを保存
 
 ## システム構成
 
@@ -109,6 +122,12 @@ docker-compose up -d
 - パスワード: admin
 
 ## 注意事項
+
+- 本プロジェクトは、オリジナルのdcm4chee-arc-lightやdcm4chee-arc-psqlのDockerイメージを修正・拡張したものではありません。
+- これらのDockerイメージを`docker-compose.yml`で組み合わせて使用するための設定ファイルを提供するものです。
+- 実際のDICOM PACSシステムの機能は、オリジナルのdcm4chee-arc-lightプロジェクトによって提供されています。
+
+## セキュリティに関する注意事項
 
 1. 本番環境では、デフォルトのパスワードを変更してください
 2. データの永続化のため、`data`ディレクトリは定期的にバックアップしてください
